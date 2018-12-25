@@ -1,0 +1,23 @@
+To build the docker image:
+docker build -t nimesh/nimesh-server .
+
+To list docker images:
+docker images
+
+To run the image:
+docker run -p 49160:8080 -d nimesh/nimesh-server
+
+To stop the container:
+docker stop <container id>
+
+To list containers:
+docker ps
+
+To print app output:
+docker logs <container id>
+
+To enter the container:
+docker exec -it <container id> /bin/bash
+
+To delete all Images, Containers, Volumes and Networks:
+docker system prune -a
