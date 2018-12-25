@@ -10,7 +10,7 @@ services:
       - postgres
     environment:
       NODE_ENV: development
-      DATABASE_URL: postgres://nimesh@postgres/nimesh
+      DATABASE_URL: postgres://nimesh:nimesh@postgres/postgres
     volumes:
       - .:/usr/src/app # to mount local volume for development
   postgres:
@@ -20,6 +20,7 @@ services:
       - 5431:5432
     environment:
       POSTGRES_USER: nimesh
+      POSTGRES_PASSWORD: nimesh
       POSTGRES_DB: postgres
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
