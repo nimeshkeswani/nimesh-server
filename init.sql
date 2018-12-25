@@ -1,0 +1,1 @@
+-- SQL Queries to create schemas, tables, etc. as a part of database initialization

@@ -16,6 +16,13 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
+#
+RUN apt-get update && apt-get -y install netcat && apt-get clean
 
-CMD [ "npm", "start" ]
+# Add entrypoint file
+RUN ["chmod", "+x", "./entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
+
+# EXPOSE 8080 # not required when using docker-compose
+
+# CMD [ "npm", "start" ] # not required when using docker-compose

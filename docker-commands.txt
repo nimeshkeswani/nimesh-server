@@ -1,3 +1,5 @@
+Using Docker:
+
 To build the docker image:
 docker build -t nimesh/nimesh-server .
 
@@ -21,3 +23,14 @@ docker exec -it <container id> /bin/bash
 
 To delete all Images, Containers, Volumes and Networks:
 docker system prune -a
+
+Using Docker Compose:
+
+To download images, if any:
+docker-compose pull
+
+To build images using Dockerfiles, if any:
+docker-compose build
+
+To start the containers as a service:
+docker-compose up
