@@ -1,0 +1,21 @@
+To print version number:
+sequelize version
+
+To display help text
+sequelize help
+
+To initialize the project:
+sequelize init
+
+To create an empty migration file:
+sequelize migration:create --name <migrate name>
+
+To create a model and migration:
+sequelize model:create --name <model name> --attributes "<attribute name>:<attribute type>, ..."
+Example: sequelize model:create --name Page --attributes "name:string, text:text, url:string"
+
+To run pending migrations:
+sequelize db:migrate
+
+To revert the last migration run:
+sequelize db:migrate:undo

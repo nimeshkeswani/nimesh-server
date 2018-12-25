@@ -19,6 +19,9 @@ RUN npm install
 #
 RUN apt-get update && apt-get -y install netcat && apt-get clean
 
+# Add .sequelizerc file
+COPY ./.sequelizerc ./.sequelizerc
+
 # Add entrypoint file
 COPY ./entrypoint.sh ./entrypoint.sh
 RUN ["chmod", "+x", "./entrypoint.sh"]
