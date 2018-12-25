@@ -1,0 +1,15 @@
+{
+  "name": "nimesh-server",
+  "version": "1.0.0",
+  "description": "Nimesh's Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nimesh Keswani",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
