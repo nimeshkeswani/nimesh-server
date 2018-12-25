@@ -3,13 +3,16 @@ services:
   web:
     container_name: web
     build: .
-    command: npm start
+    command: npm run start:dev # to run server using nodemon for development
     ports:
       - 4040:8080
     depends_on:
       - postgres
     environment:
+      NODE_ENV: development
       DATABASE_URL: postgres://nimesh@postgres/nimesh
+    volumes:
+      - .:/usr/src/app # to mount local volume for development
   postgres:
     container_name: postgres
     image: postgres:9.6.2-alpine
