@@ -12,7 +12,7 @@ services:
       NODE_ENV: development
       DATABASE_URL: postgres://nimesh:nimesh@postgres/postgres
     volumes:
-      - .:/usr/src/app # to mount local volume for development
+      - ./src:/usr/src/app/src # to mount local volume for development
   postgres:
     container_name: postgres
     image: postgres:9.6.2-alpine
