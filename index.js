@@ -1,4 +1,5 @@
 const express = require('express')
+const sequelize = require('./sequelize/connection/index')
 
 // Constants
 const PORT = 8080
