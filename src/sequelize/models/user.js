@@ -35,6 +35,8 @@ module.exports = (sequelize, DataTypes) => {
       generateHash: password => bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     }
   })
-
+  User.associate = function (models) {
+    // associations can be defined here
+  }
   return User
 }
