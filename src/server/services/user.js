@@ -24,6 +24,18 @@ class UserService {
     })
     return user[1][0]
   }
+
+  async updateUserPassword (id, password) {
+    const user = await User.update({
+      password
+    }, {
+      where: {
+        id
+      },
+      returning: true
+    })
+    return user[1][0]
+  }
 }
 
 module.exports = new UserService()
