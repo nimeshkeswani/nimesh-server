@@ -18,10 +18,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
-      set: function (val) {
-        this.setDataValue('password', this.generateHash(val))
-      }
+      validate: {
+        len: [8, 20]
+      },
+      allowNull: false
     },
     firstName: {
       type: DataTypes.STRING,
@@ -33,17 +33,25 @@ module.exports = (sequelize, DataTypes) => {
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW
+      allowNull: false
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW
+      allowNull: false
     }
   }, {
-    instanceMethods: {
-      generateHash: password => bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+    freezeTableName: true,
+    hooks: {
+      afterValidate: function (user) {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10))
+      },
+      beforeCreate: function (user, options) {
+        user.createdAt = new Date()
+        user.updatedAt = new Date()
+      },
+      beforeUpdate: function (user, options) {
+        user.updatedAt = new Date()
+      }
     }
   })
   User.associate = function (models) {

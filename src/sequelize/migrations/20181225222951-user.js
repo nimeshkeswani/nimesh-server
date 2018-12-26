@@ -18,10 +18,10 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,
-        set: function (val) {
-          this.setDataValue('password', this.generateHash(val))
-        }
+        validate: {
+          len: [8, 20]
+        },
+        allowNull: false
       },
       firstName: {
         type: Sequelize.STRING,
@@ -33,13 +33,11 @@ module.exports = {
       },
       createdAt: {
         type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW
+        allowNull: false
       },
       updatedAt: {
         type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW
+        allowNull: false
       }
     })
   },
