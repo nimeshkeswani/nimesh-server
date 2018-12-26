@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     hooks: {
       afterValidate: function (user) {
-        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10))
+        if (user.password) user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10))
       },
       beforeCreate: function (user, options) {
         user.createdAt = new Date()

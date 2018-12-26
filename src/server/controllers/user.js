@@ -10,3 +10,15 @@ exports.create = async (req, res) => {
     res.status(400).send({ error: err.message })
   }
 }
+
+// Update a User
+exports.update = async (req, res) => {
+  try {
+    const id = req.params.id
+    const { firstName, lastName } = req.body
+    const user = await UserService.updateUser(id, firstName, lastName)
+    return res.status(200).send(user)
+  } catch (err) {
+    res.status(400).send({ error: err.message })
+  }
+}
