@@ -1,7 +1,17 @@
 const UserService = require('../services/user')
 
+// Get Users
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await UserService.getUsers()
+    return res.status(200).send(users)
+  } catch (err) {
+    res.status(400).send({ error: err.message })
+  }
+}
+
 // Create a User
-exports.create = async (req, res) => {
+exports.createUser = async (req, res) => {
   try {
     const { email, password, firstName, lastName } = req.body
     const user = await UserService.createUser(email, password, firstName, lastName)
@@ -11,8 +21,18 @@ exports.create = async (req, res) => {
   }
 }
 
+// Get a User
+exports.getUser = async (req, res) => {
+  try {
+    const user = await UserService.getUser(req.params.id)
+    return res.status(200).send(user)
+  } catch (err) {
+    res.status(400).send({ error: err.message })
+  }
+}
+
 // Update a User
-exports.update = async (req, res) => {
+exports.updateUser = async (req, res) => {
   try {
     const id = req.params.id
     const { firstName, lastName } = req.body
@@ -24,7 +44,7 @@ exports.update = async (req, res) => {
 }
 
 // Update a User Password
-exports.updatePassword = async (req, res) => {
+exports.updateUserPassword = async (req, res) => {
   try {
     const id = req.params.id
     const { password } = req.body

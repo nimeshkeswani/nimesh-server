@@ -2,6 +2,11 @@ const { User } = require('../models')
 
 class UserService {
 
+  async getUsers () {
+    const users = await User.findAll()
+    return users
+  }
+
   async createUser (email, password, firstName, lastName) {
     const user = await User.create({
       email,
@@ -9,6 +14,11 @@ class UserService {
       firstName,
       lastName
     })
+    return user
+  }
+
+  async getUser (id) {
+    const user = await User.findById(id)
     return user
   }
 

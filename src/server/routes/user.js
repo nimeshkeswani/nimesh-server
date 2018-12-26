@@ -1,8 +1,10 @@
 const router = require('express').Router()
 const user = require('../controllers/user')
 
-router.post('/', user.create)
-router.patch('/:id', user.update)
-router.post('/:id/changePassword', user.updatePassword)
+router.get('/', user.getUsers)
+router.post('/', user.createUser)
+router.get('/:id', user.getUser)
+router.patch('/:id', user.updateUser)
+router.post('/:id/changePassword', user.updateUserPassword)
 
 module.exports = router
