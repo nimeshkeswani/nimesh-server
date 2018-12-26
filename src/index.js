@@ -1,5 +1,6 @@
 const express = require('express')
-const { sequelize } = require('./sequelize/models/index')
+const { sequelize } = require('./server/models/index')
+const userRouter = require('./server/routes/user')
 
 // Constants
 const PORT = 8080
@@ -23,3 +24,9 @@ sequelize
   .catch(err => {
     console.error('Unable to establish Sequilize connection to the postgres:', err)
   })
+
+// Middlewares
+app.use(express.json())
+
+// Routes
+app.use('/api/users', userRouter)
