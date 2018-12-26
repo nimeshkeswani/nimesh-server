@@ -1,9 +1,6 @@
 {
   "development": {
-    "username": "nimesh",
-    "password": "nimesh",
-    "database": "postgres",
-    "host": "postgres",
+    "use_env_variable": "DATABASE_URL",
     "dialect": "postgres"
   },
   "test": {
