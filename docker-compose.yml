@@ -3,7 +3,7 @@ services:
   web:
     container_name: web
     build: .
-    command: npm run start:dev # to run server using nodemon for development
+    command: bash -c "npm run migrate && npm run start:dev" # to run pending migrations and run server using nodemon for development
     ports:
       - 4040:8080
     depends_on:

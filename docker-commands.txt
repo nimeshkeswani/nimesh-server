@@ -1,10 +1,11 @@
-Using Docker:
+----Using Docker----:
 
 To build the docker image:
 docker build -t nimesh/nimesh-server .
 
 To list docker images:
-docker images
+-a show all images (default hides intermediate images)
+docker images -a
 
 To run the image:
 docker run -p 49160:8080 -d nimesh/nimesh-server
@@ -13,18 +14,25 @@ To stop the container:
 docker stop <container id>
 
 To list containers:
-docker ps
+-a shows all containers (default shows just running)
+docker ps -a
 
 To print app output:
 docker logs <container id>
 
 To enter the container:
-docker exec -it <container id> /bin/bash
+docker exec -it <container id> bash
+
+To remove all images:
+docker rmi $(docker images -aq)
+
+To remove all containers:
+docker rm $(docker ps -aq)
 
 To delete all Images, Containers, Volumes and Networks:
 docker system prune -a
 
-Using Docker Compose:
+----Using Docker Compose----:
 
 To download images, if any:
 docker-compose pull
@@ -34,3 +42,13 @@ docker-compose build
 
 To start the containers as a service:
 docker-compose up
+
+To stop containers and remove containers, networks, volumes, and images:
+--remove-orphans removes containers for services not defined in the Compose file
+-v removes named volumes declared in the `volumes` section of the Compose file and anonymous volumes attached to containers
+docker-compose down --remove-orphans -v
+
+To run one-off commands for your services:
+docker-compose run <service name> <command>
+For example, to see what environment variables are available to the web service:
+docker-compose run web env
