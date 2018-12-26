@@ -3,13 +3,22 @@ const bcrypt = require('bcrypt')
 
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     email: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isEmail: true
+      }
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
       set: function (val) {
         this.setDataValue('password', this.generateHash(val))
       }
@@ -24,10 +33,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     createdAt: {
       type: DataTypes.DATE,
+      allowNull: false,
       defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
+      allowNull: false,
       defaultValue: DataTypes.NOW
     }
   }, {
