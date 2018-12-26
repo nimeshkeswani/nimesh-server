@@ -13,8 +13,7 @@ exports.getUsers = async (req, res) => {
 // Create a User
 exports.createUser = async (req, res) => {
   try {
-    const { email, password, firstName, lastName } = req.body
-    const user = await UserService.createUser(email, password, firstName, lastName)
+    const user = await UserService.createUser(req.body)
     return res.status(200).send(user)
   } catch (err) {
     res.status(400).send({ error: err.message })
@@ -35,8 +34,7 @@ exports.getUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const id = req.params.id
-    const { firstName, lastName } = req.body
-    const user = await UserService.updateUser(id, firstName, lastName)
+    const user = await UserService.updateUser(id, req.body)
     return res.status(200).send(user)
   } catch (err) {
     res.status(400).send({ error: err.message })
@@ -47,8 +45,7 @@ exports.updateUser = async (req, res) => {
 exports.updateUserPassword = async (req, res) => {
   try {
     const id = req.params.id
-    const { password } = req.body
-    const user = await UserService.updateUserPassword(id, password)
+    const user = await UserService.updateUserPassword(id, req.body)
     return res.status(200).send(user)
   } catch (err) {
     res.status(400).send({ error: err.message })

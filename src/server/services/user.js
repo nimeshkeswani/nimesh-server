@@ -7,12 +7,9 @@ class UserService {
     return users
   }
 
-  async createUser (email, password, firstName, lastName) {
-    const user = await User.create({
-      email,
-      password,
-      firstName,
-      lastName
+  async createUser (data) {
+    const user = await User.create(data, {
+      fields: ['email', 'password', 'firstName', 'lastName']
     })
     return user
   }
@@ -22,26 +19,23 @@ class UserService {
     return user
   }
 
-  async updateUser (id, firstName, lastName) {
-    const user = await User.update({
-      firstName,
-      lastName
-    }, {
+  async updateUser (id, data) {
+    const user = await User.update(data, {
       where: {
         id
       },
+      fields: ['firstName', 'lastName'],
       returning: true
     })
     return user[1][0]
   }
 
-  async updateUserPassword (id, password) {
-    const user = await User.update({
-      password
-    }, {
+  async updateUserPassword (id, data) {
+    const user = await User.update(data, {
       where: {
         id
       },
+      fields: ['password'],
       returning: true
     })
     return user[1][0]
