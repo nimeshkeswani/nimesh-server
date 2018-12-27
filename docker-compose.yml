@@ -13,6 +13,7 @@ services:
       DATABASE_URL: postgres://nimesh:nimesh@postgres/postgres
     volumes:
       - ./src:/usr/src/app/src # to mount local volume for development
+      - ./config:/usr/src/app/config # to mount local volume for development
   postgres:
     container_name: postgres
     image: postgres:9.6.2-alpine

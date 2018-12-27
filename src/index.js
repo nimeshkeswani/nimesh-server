@@ -5,10 +5,11 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const helmet = require('helmet')
 const morgan = require('morgan')
+const config = require('config')
 
 // Constants
-const PORT = process.env.PORT || 8080
-const HOST = '0.0.0.0'
+const HOST = config.server.host
+const PORT = config.server.port
 
 // App
 const app = express()
