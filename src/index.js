@@ -1,9 +1,13 @@
 const express = require('express')
 const { sequelize } = require('./server/models/index')
 const userRouter = require('./server/routes/user')
+const bodyParser = require('body-parser')
+const path = require('path')
+const helmet = require('helmet')
+const morgan = require('morgan')
 
 // Constants
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 const HOST = '0.0.0.0'
 
 // App
@@ -26,7 +30,10 @@ sequelize
   })
 
 // Middlewares
-app.use(express.json())
+app.use(helmet()) // middleare to set secure HTTP headers
+if (process.env.NODE_ENV === 'development') app.use(morgan('tiny')) // logger middleware
+app.use(bodyParser.json()) // middleware to parse request body
+app.use(express.static(path.join(__dirname, '/public')))
 
 // Routes
 app.use('/api/users', userRouter)
