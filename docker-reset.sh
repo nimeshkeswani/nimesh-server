@@ -3,8 +3,7 @@
 docker-compose down --remove-orphans
 
 CONTAINERS="$(docker ps -aq)"
-echo "CONTAINERSSSSSS:"
-# echo "${CONTAINERS}"
+
 if [ -z "$CONTAINERS" ]
 then
 echo No CONTAINERS present
@@ -14,8 +13,7 @@ docker rm $CONTAINERS
 fi
 
 IMAGES="$(docker images -aq)"
-echo "IMAGESSSSSSS:"
-# echo "${IMAGES}"
+
 if [ -z "$IMAGES" ]
 then
 echo No IMAGES present
