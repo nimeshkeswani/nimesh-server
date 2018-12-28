@@ -5,6 +5,6 @@ router.get('/', user.getUsers)
 router.post('/', user.createUser)
 router.get('/:id', user.getUser)
 router.patch('/:id', user.updateUser)
-router.post('/:id/changePassword', user.updateUserPassword)
+router.delete('/:id', user.deleteUser)
 
 module.exports = router

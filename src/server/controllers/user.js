@@ -6,7 +6,7 @@ exports.getUsers = async (req, res) => {
     const users = await UserService.getUsers()
     return res.status(200).send(users)
   } catch (err) {
-    res.status(400).send({ error: err.message })
+    return res.status(400).send({ error: err.message })
   }
 }
 
@@ -16,7 +16,7 @@ exports.createUser = async (req, res) => {
     const user = await UserService.createUser(req.body)
     return res.status(200).send(user)
   } catch (err) {
-    res.status(400).send({ error: err.message })
+    return res.status(400).send({ error: err.message })
   }
 }
 
@@ -37,18 +37,17 @@ exports.updateUser = async (req, res) => {
     const user = await UserService.updateUser(id, req.body)
     return res.status(200).send(user)
   } catch (err) {
-    res.status(400).send({ error: err.message })
+    return res.status(400).send({ error: err.message })
   }
 }
 
-// Update a User Password
-exports.updateUserPassword = async (req, res) => {
+// Delete a User
+exports.deleteUser = async (req, res) => {
   try {
     const id = req.params.id
-    const user = await UserService.updateUserPassword(id, req.body)
+    const user = await UserService.deleteUser(id)
     return res.status(200).send(user)
   } catch (err) {
-    res.status(400).send({ error: err.message })
+    return res.status(400).send({ error: err.message })
   }
 }
-
