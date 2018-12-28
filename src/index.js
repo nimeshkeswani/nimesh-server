@@ -7,21 +7,7 @@ const path = require('path')
 const helmet = require('helmet')
 const morgan = require('morgan')
 const config = require('config')
-const winston = require('winston')
-
-// Logger
-const level = process.env.LOG_LEVEL || 'debug'
-
-const logger = winston.createLogger({
-  transports: [
-    new winston.transports.Console({
-      level: level,
-      timestamp: function () {
-        return (new Date()).toISOString()
-      }
-    })
-  ]
-})
+const logger = require('./server/middlewares/logger')
 
 // Constants
 const HOST = config.server.host
@@ -46,7 +32,7 @@ sequelize
 // Middlewares
 app.use(helmet()) // middleare to set secure HTTP headers
 if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev')) // logger middleware
+  app.use(morgan('dev')) // HTTP logger middleware
   logger.debug('Morgan enabled...')
 }
 app.use(bodyParser.json()) // middleware to parse request body
