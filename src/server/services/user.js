@@ -1,4 +1,5 @@
 const { User } = require('../models')
+const bcrypt = require('bcrypt')
 
 class UserService {
   constructor () {
@@ -69,6 +70,15 @@ class UserService {
         id
       }
     })
+  }
+
+  async findByEmail (email) {
+    return await User.findOne({ where: { email } })
+  }
+
+  async isPasswordValid (id, password) {
+    const user = await User.findById(id)
+    return await bcrypt.compare(password, user.password)
   }
 }
 

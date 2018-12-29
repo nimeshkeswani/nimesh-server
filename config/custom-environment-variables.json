@@ -1,5 +1,7 @@
 {
   "server": {
     "database": "DATABASE_URL"
-  }
+  },
+  "jwtPrivateKey": "JWT_PRIVATE_KEY",
+  "node_env": "NODE_ENV"
 }

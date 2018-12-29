@@ -2,6 +2,7 @@ const express = require('express')
 const { sequelize } = require('./server/models/index')
 const homeRouter = require('./server/routes/home')
 const userRouter = require('./server/routes/user')
+const authRouter = require('./server/routes/auth')
 const bodyParser = require('body-parser')
 const path = require('path')
 const helmet = require('helmet')
@@ -29,6 +30,12 @@ sequelize
     logger.debug('Unable to establish Sequilize connection to the postgres:', err)
   })
 
+// Check if JWT Private Key is defined
+if (!config.jwtPrivateKey) {
+  logger.error('Environment Variable JWT_PRIVATE_KEY is not defined')
+  process.exit(1)
+}
+
 // Middlewares
 app.use(helmet()) // middleare to set secure HTTP headers
 if (process.env.NODE_ENV === 'development') {
@@ -40,4 +47,5 @@ app.use(express.static(path.join(__dirname, '/public')))
 
 // Routes
 app.use('/', homeRouter)
+app.use('/api/auth', authRouter)
 app.use('/api/users', userRouter)
