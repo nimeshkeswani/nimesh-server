@@ -1,8 +1,8 @@
 const express = require('express')
 const app = express() // App
-require('express-async-errors')
-require('./server/routes')(app)
-const { sequelize } = require('./server/models/index')
+require('express-async-errors') // Monkey patch all routes handlers
+require('./server/routes')(app) // Load all routes
+require('./server/startup/db')() // Check if database is available
 const config = require('config')
 const logger = require('./server/middlewares/logger')
 
@@ -12,16 +12,6 @@ const PORT = config.server.port
 
 app.listen(PORT, HOST)
 logger.debug(`Running on http://${HOST}:${PORT}`)
-
-// Test Sequelize connection
-sequelize
-  .authenticate()
-  .then(() => {
-    logger.debug('Sequilize connection to postgres has been established successfully.')
-  })
-  .catch(err => {
-    logger.debug('Unable to establish Sequilize connection to the postgres:', err)
-  })
 
 // Check if JWT Private Key is defined
 if (!config.jwtPrivateKey) {
