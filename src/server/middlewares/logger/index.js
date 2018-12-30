@@ -21,6 +21,13 @@ const logger = createLogger({
         myFormat
       ),
       level: level
+    }),
+    new transports.File({
+      format: combine(
+        myFormat
+      ),
+      filename: 'logfile.log',
+      level: level
     })
   ]
 })
