@@ -1,9 +1,9 @@
-const UserService = require('../services/user')
+const { User } = require('../models')
 
 // Get Users
 exports.getUsers = async (req, res) => {
   try {
-    const users = await UserService.getUsers()
+    const users = await User.getUsers()
     return res.status(200).send(users)
   } catch (err) {
     return res.status(400).send({ error: err.message })
@@ -13,7 +13,15 @@ exports.getUsers = async (req, res) => {
 // Create a User
 exports.createUser = async (req, res) => {
   try {
-    const user = await UserService.createUser(req.body)
+    // Validate the data
+    const { error } = await User.joiValidate(req.body)
+    if (error) res.status(400).send({ error: error.details[0].message })
+
+    // Check if User exists
+    let user = await User.findByEmail(req.body.email)
+    if (user) return res.status(400).send({ error: 'User already axists' })
+
+    user = await User.createUser(req.body)
     return res.status(200).send(user)
   } catch (err) {
     return res.status(400).send({ error: err.message })
@@ -23,7 +31,10 @@ exports.createUser = async (req, res) => {
 // Get a User
 exports.getUser = async (req, res) => {
   try {
-    const user = await UserService.getUser(req.params.id)
+    // Check if User exists
+    const user = await User.getUser(req.params.id)
+    if (!user) return res.status(400).send({ error: 'User does not exist' })
+
     return res.status(200).send(user)
   } catch (err) {
     res.status(400).send({ error: err.message })
@@ -33,8 +44,19 @@ exports.getUser = async (req, res) => {
 // Update a User
 exports.updateUser = async (req, res) => {
   try {
-    const id = req.params.id
-    const user = await UserService.updateUser(id, req.body)
+    // Validate the data
+    const { error } = await User.joiValidate(req.body, {
+      firstName: { required: false },
+      lastName: { required: false },
+      password: { required: false }
+    })
+    if (error) res.status(400).send({ error: error.details[0].message })
+
+    // Check if User exists
+    let user = await User.getUser(req.params.id)
+    if (!user) return res.status(400).send({ error: 'User does not exist' })
+
+    user = await user.updateUser(req.body)
     return res.status(200).send(user)
   } catch (err) {
     return res.status(400).send({ error: err.message })
@@ -44,9 +66,12 @@ exports.updateUser = async (req, res) => {
 // Delete a User
 exports.deleteUser = async (req, res) => {
   try {
-    const id = req.params.id
-    const user = await UserService.deleteUser(id)
-    return res.status(200).send(user)
+    // Check if User exists
+    const user = await User.getUser(req.params.id)
+    if (!user) return res.status(400).send({ error: 'User does not exist' })
+
+    await user.deleteUser()
+    return res.status(200).send()
   } catch (err) {
     return res.status(400).send({ error: err.message })
   }

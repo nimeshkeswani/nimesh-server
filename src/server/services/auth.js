@@ -1,12 +1,6 @@
-const jwt = require('jsonwebtoken')
 const Joi = require('joi')
-const config = require('config')
 
 class AuthService {
-
-  async generateAuthToken (user) {
-    return jwt.sign({ id: user.id, email: user.email }, config.jwtPrivateKey)
-  }
 
   async validate (object) {
     // Joi Schema

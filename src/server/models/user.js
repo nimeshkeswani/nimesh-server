@@ -2,6 +2,8 @@
 const bcrypt = require('bcrypt')
 const Joi = require('joi')
 const _ = require('lodash')
+const config = require('config')
+const jwt = require('jsonwebtoken')
 
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
@@ -82,6 +84,61 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     return await Joi.validate(object, schema)
+  }
+
+  const attributes = ['id', 'email', 'firstName', 'lastName', 'createdAt', 'updatedAt']
+
+  User.getUsers = async () => {
+    return await User.findAll({ attributes })
+  }
+
+  User.getUser = async (id) => {
+    return await User.findById(id, { attributes })
+  }
+
+  User.createUser = async (data) => {
+    // Create the User
+    let user = await User.create(data, {
+      fields: ['email', 'password', 'firstName', 'lastName']
+    })
+
+    user = await User.getUser(user.id)
+
+    return user
+  }
+
+  User.findByEmail = async (email) => {
+    return await User.findOne({ where: { email } })
+  }
+
+  User.prototype.updateUser = async function (data) {
+    // Update the User
+    await User.update(data, {
+      where: {
+        id: this.id
+      },
+      fields: ['firstName', 'lastName', 'password']
+    })
+
+    const user = await User.getUser(this.id)
+
+    return user
+  }
+
+  User.prototype.deleteUser = async function () {
+    await User.destroy({
+      where: {
+        id: this.id
+      }
+    })
+  }
+
+  User.prototype.generateAuthToken = async function () {
+    return jwt.sign({ id: this.id, email: this.email }, config.jwtPrivateKey)
+  }
+
+  User.prototype.isPasswordValid = async function (password) {
+    return await bcrypt.compare(password, this.password)
   }
 
   return User
