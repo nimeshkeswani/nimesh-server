@@ -29,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false
@@ -134,7 +139,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   User.prototype.generateAuthToken = async function () {
-    return jwt.sign({ id: this.id, email: this.email }, config.jwtPrivateKey)
+    return jwt.sign({ id: this.id, email: this.email, isAdmin: this.isAdmin }, config.jwtPrivateKey)
   }
 
   User.prototype.isPasswordValid = async function (password) {
