@@ -41,6 +41,19 @@ exports.getUser = async (req, res) => {
   }
 }
 
+// Get Me
+exports.getMe = async (req, res) => {
+  try {
+    // Check if User exists
+    const user = await User.getUser(req.user.id)
+    if (!user) return res.status(400).send({ error: 'User does not exist' })
+
+    return res.status(200).send(user)
+  } catch (err) {
+    return res.status(400).send({ error: err.message })
+  }
+}
+
 // Update a User
 exports.updateUser = async (req, res) => {
   try {
