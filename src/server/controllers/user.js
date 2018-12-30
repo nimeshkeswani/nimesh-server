@@ -15,7 +15,7 @@ exports.createUser = async (req, res) => {
   try {
     // Validate the data
     const { error } = await User.joiValidate(req.body)
-    if (error) res.status(400).send({ error: error.details[0].message })
+    if (error) return res.status(400).send({ error: error.details[0].message })
 
     // Check if User exists
     let user = await User.findByEmail(req.body.email)
@@ -37,7 +37,7 @@ exports.getUser = async (req, res) => {
 
     return res.status(200).send(user)
   } catch (err) {
-    res.status(400).send({ error: err.message })
+    return res.status(400).send({ error: err.message })
   }
 }
 
@@ -50,7 +50,7 @@ exports.updateUser = async (req, res) => {
       lastName: { required: false },
       password: { required: false }
     })
-    if (error) res.status(400).send({ error: error.details[0].message })
+    if (error) return res.status(400).send({ error: error.details[0].message })
 
     // Check if User exists
     let user = await User.getUser(req.params.id)
