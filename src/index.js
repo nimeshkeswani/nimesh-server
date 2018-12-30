@@ -54,3 +54,15 @@ app.use('/api/users', userRouter)
 
 // Error Middleware
 app.use(error)
+
+// Handle Uncaught Exceptions
+process.on('uncaughtException', (ex) => {
+  logger.error(ex.message, ex)
+  process.exit(1)
+})
+
+// Handle Unhandled Promise Rejections
+process.on('unhandledRejection', (ex) => {
+  logger.error(ex.message, ex)
+  process.exit(1)
+})
