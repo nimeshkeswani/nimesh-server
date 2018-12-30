@@ -7,7 +7,7 @@ const error = require('../middlewares/error')
 const homeRouter = require('../routes/home')
 const userRouter = require('../routes/user')
 const authRouter = require('../routes/auth')
-const logger = require('../middlewares/logger')
+const logger = require('../startup/logger')
 
 module.exports = (app) => {
   // Middlewares

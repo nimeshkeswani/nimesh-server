@@ -1,5 +1,5 @@
 const { sequelize } = require('../models')
-const logger = require('../middlewares/logger')
+const logger = require('../startup/logger')
 
 module.exports = () => {
   // Test Sequelize connection
@@ -7,5 +7,5 @@ module.exports = () => {
   .authenticate()
   .then(() => {
     logger.info('Sequilize connection to postgres has been established successfully.')
-})
+  })
 }

@@ -1,3 +1,4 @@
+require('express-async-errors') // Monkey patch all routes handlers
 const { createLogger, format, transports } = require('winston')
 const { combine, timestamp, printf, colorize } = format
 
@@ -30,6 +31,18 @@ const logger = createLogger({
       level: level
     })
   ]
+})
+
+// Handle Uncaught Exceptions
+process.on('uncaughtException', (ex) => {
+  logger.error(ex.message, ex)
+  process.exit(1)
+})
+
+// Handle Unhandled Promise Rejections
+process.on('unhandledRejection', (ex) => {
+  logger.error(ex.message, ex)
+  process.exit(1)
 })
 
 module.exports = logger
