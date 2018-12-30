@@ -1,3 +1,4 @@
+require('express-async-errors')
 const express = require('express')
 const { sequelize } = require('./server/models/index')
 const homeRouter = require('./server/routes/home')
@@ -9,6 +10,7 @@ const helmet = require('helmet')
 const morgan = require('morgan')
 const config = require('config')
 const logger = require('./server/middlewares/logger')
+const error = require('./server/middlewares/error')
 
 // Constants
 const HOST = config.server.host
@@ -49,3 +51,6 @@ app.use(express.static(path.join(__dirname, '/public')))
 app.use('/', homeRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/users', userRouter)
+
+// Error Middleware
+app.use(error)
