@@ -3,6 +3,7 @@ const app = express() // App
 const logger = require('./server/startup/logger')
 require('./server/routes')(app) // Load all routes
 require('./server/startup/db')() // Check if database is available
+require('./server/startup/config')() // Check if necessary configuration is set
 const config = require('config')
 
 // Constants
@@ -10,10 +11,4 @@ const HOST = config.server.host
 const PORT = config.server.port
 
 app.listen(PORT, HOST)
-logger.debug(`Running on http://${HOST}:${PORT}`)
-
-// Check if JWT Private Key is defined
-if (!config.jwtPrivateKey) {
-  logger.error('Environment Variable JWT_PRIVATE_KEY is not defined')
-  process.exit(1)
-}
+logger.info(`Running on http://${HOST}:${PORT}`)

@@ -14,7 +14,7 @@ module.exports = (app) => {
   app.use(helmet()) // middleare to set secure HTTP headers
   if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev')) // HTTP logger middleware
-    logger.debug('Morgan enabled...')
+    logger.info('Morgan enabled...')
   }
   app.use(bodyParser.json()) // middleware to parse request body
   app.use(express.static(path.join(__dirname, '/public')))
